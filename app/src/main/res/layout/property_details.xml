@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="10dp">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="Details"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/btnClose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <LinearLayout
+            android:id="@+id/singleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/module"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Module"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/qrNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="QR Code"
+                    android:text="QR Code"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/propertyNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Property No."
+                    android:text="Property No."
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Description"
+                    android:text="Description"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/serialNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Serial No."
+                    android:text="Serial No."
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/cost"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Cost"
+                    android:text="Cost"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dateAcquired"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Date Acquired"
+                    android:text="Date Acquired"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/transferType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Transfer Type"
+                    android:text="Transfer Type"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/transferReason"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Transfer Reason"
+                    android:text="Transfer Reason"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/returnType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Return Type"
+                    android:text="Return Type"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/issuedBy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Issued By"
+                    android:text="Issued By"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/receivedBy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Received By"
+                    android:text="Received By"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/approvedBy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="false"
+                    android:hint="Approved By"
+                    android:text="Approved By"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/createdBy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Created By"
+                    android:text="Created By"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/button_secondary"
+        android:text="Close"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/loadingIndicator"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

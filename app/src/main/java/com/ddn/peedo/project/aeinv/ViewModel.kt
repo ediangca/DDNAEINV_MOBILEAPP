@@ -1,5 +1,6 @@
 package com.ddn.peedo.project.aeinv
 
+import android.media.SoundPool
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +19,9 @@ class ItemViewModel : ViewModel() {
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
 
+
     fun fetchItem(qrCode: String) {
+
         viewModelScope.launch {
             try {
                 val response = RetrofitClient.apiService.getItemsByQRCode(qrCode)

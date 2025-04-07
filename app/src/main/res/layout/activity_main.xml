@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,80 +9,107 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ddn_logo" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/peedo_logo" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/singleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="@string/province"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="@string/department"
+            android:textAlignment="center"
+            android:textFontWeight="600" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:textStyle="italic|bold"
+            android:text="@string/app_description"
+            android:textAlignment="center"/>
+
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginVertical="10dp"
+            app:dividerColor="@color/primary" />
 
         <androidx.camera.view.PreviewView
             android:id="@+id/previewView"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            />
+            android:layout_height="350dp" />
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:layout_marginVertical="10dp"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/qrCode"
+                android:id="@+id/filter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
+                android:hint="Enter QR Code | Property No."
                 android:textColor="@color/black"
-                android:hint="Enter QR Code"
                 android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/itemName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Item ID"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/itemDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:textSize="16sp"
-            android:paddingTop="4dp"/>
-
-        <TextView
-            android:id="@+id/itemPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PropertyNo"
-            android:textSize="16sp"
-            android:paddingTop="4dp"/>
-
-        <TextView
-            android:id="@+id/itemQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Amount"
-            android:textSize="16sp"
-            android:paddingTop="4dp"/>
-
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fetchButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fetch Item"
-            android:paddingTop="16dp"/>
+            android:background="@drawable/button_primary"
+            android:fontFamily="monospace"
+            android:padding="16dp"
+            android:text="Search"
+            android:textColor="@color/white"
+            android:textFontWeight="800"
+            android:textSize="20dp" />
     </LinearLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

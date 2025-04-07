@@ -6,4 +6,25 @@
     </style>
 
     <style name="Theme.DDNAEINV" parent="Base.Theme.DDNAEINV" />
+
+
+    <!-- Customize your theme here. -->
+
+    <style name="Theme.DDNAEINV.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/color_light_3</item>
+        <item name="colorOnPrimary">@color/color_blue_4</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/primary</item>
+        <item name="colorSecondaryVariant">@color/primary</item>
+        <item name="colorOnSecondary">@color/primary</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="Theme.DDNAEINV.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

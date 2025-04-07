@@ -3,9 +3,17 @@ package com.ddn.peedo.project.aeinv
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.media.SoundPool
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -21,14 +29,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ddn.peedo.project.aeinv.adapter.ItemDetailsAdapter
 import com.ddn.peedo.project.aeinv.databinding.ActivityMainBinding
+import com.ddn.peedo.project.aeinv.databinding.PropertyDetailsBinding
+import com.ddn.peedo.project.aeinv.model.ItemResponse
 import com.ddn.peedo.project.aeinv.services.QRCodeAnalyzer
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
     private val itemViewModel: ItemViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var propertyDetailsBinding: PropertyDetailsBinding
+    private lateinit var dialog: Dialog
 
+    private var isitemDisplayed: Boolean = false;
+
+    private lateinit var soundPool: SoundPool
+    private var soundId: Int = 0
+    private var isScanning = false
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ItemDetailsAdapter
@@ -54,6 +72,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        soundPool = SoundPool.Builder().setMaxStreams(1).build()
+        soundId = soundPool.load(this, R.raw.beep, 1)
 
 
 //        val itemName: TextView = findViewById(R.id.itemName)
@@ -63,33 +83,39 @@ class MainActivity : AppCompatActivity() {
 //        val fetchButton: Button = findViewById(R.id.fetchButton)
         with(binding) {
             fetchButton.setOnClickListener {
-                val qrCodeText = qrCode.text.toString().trim()
+                val qrCodeText = filter.text.toString().trim()
 
                 Log.d("ONFETCH_QRCODE", "Scanning $qrCodeText")
                 Toast.makeText(this@MainActivity, "Scanning $qrCodeText", Toast.LENGTH_SHORT).show()
 
                 if (qrCodeText.isEmpty()) {
-                    Toast.makeText(this@MainActivity, "Please enter a QR Code!", Toast.LENGTH_LONG).show()
-                    return@setOnClickListener
+                    Toast.makeText(this@MainActivity, "Please enter a QR Code!", Toast.LENGTH_LONG)
+                        .show()
+                } else {
+                    itemViewModel.fetchItem(qrCodeText)
                 }
 
-                itemViewModel.fetchItem(qrCodeText)
             }
 
             itemViewModel.items.observe(this@MainActivity) { itemList ->
+
                 if (itemList.isNotEmpty()) {
                     val item = itemList[0]  // ✅ Pick first item or show list
-                    Log.d("ONFETCH_QRCODE", "Item: ${item.Description}")
 
-                    itemName.text = "ID: ${item.ITEMID}"
-                    itemDescription.text = "Description: ${item.Description}"
-                    itemPrice.text = "Property No.: ${item.PropertyNo}"
-                    itemQuantity.text = "Quantity: ${item.Amount}"
+                    Log.d("ONFETCH_QRCODE", "Item: $item")
+
+                    if (!isitemDisplayed) {
+                        showItem(item)
+                    }
                 } else {
-                    Log.d("ONFETCH_QRCODE", "No item found")
+                    Log.d("ONFETCH_QRCODE", "No Property Found with this QR Code.")
+                    Toast.makeText(
+                        this@MainActivity,
+                        "No Property Found with this QR Code.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-
             itemViewModel.errorMessage.observe(this@MainActivity) { errorMessage ->
                 errorMessage?.let {
                     Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
@@ -110,6 +136,91 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun showItem(item: ItemResponse) {
+
+        propertyDetailsBinding = PropertyDetailsBinding.inflate(this.layoutInflater)
+
+        isitemDisplayed = true
+
+        val builder = AlertDialog.Builder(this)
+
+        builder.setView(propertyDetailsBinding.root)
+        builder.setCancelable(false)
+        dialog = builder.create()
+//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // <-- Add this here
+
+        with(propertyDetailsBinding) {
+            loadingIndicator.visibility = View.VISIBLE
+            title.visibility = View.GONE
+            scroll.visibility = View.GONE
+            btnClose.visibility = View.GONE
+
+            Handler(Looper.getMainLooper()).postDelayed({
+
+                module.setText(item.Module)
+                qrNo.setText(item.QRCode)
+                propertyNo.setText(item.PropertyNo)
+                description.setText(item.Description)
+                serialNo.setText(item.SerialNo)
+                cost.setText(item.Amount.toString())
+                dateAcquired.setText(item.Date_Acquired)
+                if (item.TranferFlag) {
+                    transferType.visibility = View.VISIBLE
+                    transferReason.visibility = View.VISIBLE
+                    transferType.setText(
+                        if ((item.TransferType?.lowercase() ?: "") != "others") {
+                            item.TransferType
+                        } else {
+                            item.TransferOthersType
+                        }
+                    )
+                    transferReason.setText(item.TransferReason)
+                } else {
+                    transferType.visibility = View.GONE
+                    transferReason.visibility = View.GONE
+                }
+                if (item.ReturnFlag) {
+                    returnType.visibility = View.VISIBLE
+                    returnType.setText(
+                        if ((item.ReturnType?.lowercase() ?: "") != "others") {
+                            item.ReturnType
+                        } else {
+                            item.ReturnOthersType
+                        }
+                    )
+                } else {
+                    returnType.visibility = View.GONE
+                }
+
+                issuedBy.setText(item.IssuedBy)
+                receivedBy.setText(item.ReceivedBy)
+                if (item.TranferFlag || item.ReturnFlag) {
+                    approvedBy.setText(item.ApprovedBy)
+                }
+                createdBy.setText(item.CreatedBy)
+
+                btnClose.setOnClickListener {
+                    dialog.dismiss()
+                    isitemDisplayed = false
+                }
+
+
+                loadingIndicator.visibility = View.GONE
+                title.visibility = View.VISIBLE
+                scroll.visibility = View.VISIBLE
+                btnClose.visibility = View.VISIBLE
+
+            }, 500) // Simulate short loading delay (optional)
+
+        }
+        /*if(dialogForgotPassword.window != null){
+            dialogForgotPassword.window!!.setBackgroundDrawable(ColorDrawable(0))
+        }*/
+        dialog.show()
+
+    }
+
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
@@ -127,7 +238,21 @@ class MainActivity : AppCompatActivity() {
                         ContextCompat.getMainExecutor(this),
                         QRCodeAnalyzer { qrCode ->
                             Log.d("ONFETCH_QRCODE", "Scanned: $qrCode")
-                            itemViewModel.fetchItem(qrCode) // Fetch from your API
+
+                            if (isitemDisplayed) {
+                                return@QRCodeAnalyzer
+                            }
+                            // Check if QR code is found or is empty
+                            if (!isScanning && qrCode.isNotEmpty()) {
+                                itemViewModel.fetchItem(qrCode) // Fetch from your API
+                                isScanning = true
+                                soundPool.play(soundId, 1f, 1f, 0, 0, 1f)
+                                itemViewModel.fetchItem(qrCode)
+
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    isScanning = false
+                                }, 3000) // delay for 2 seconds
+                            }
                         }
                     )
                 }
